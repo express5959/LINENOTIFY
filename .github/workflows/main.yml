@@ -1,0 +1,18 @@
+name: LINE Notify
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Notify LINE
+      run: |
+        curl -X POST https://notify-api.line.me/api/notify \
+        -H 'Authorization: Bearer ${{ secrets.LINE_NOTIFY_TOKEN }}' \
+        -F 'message=New commit pushed' \
+        -F 'imageFile=@./path/to/image.jpg'
